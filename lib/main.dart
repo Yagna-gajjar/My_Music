@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:my_music/Bottom.dart';
-import 'package:my_music/Get_Started.dart';
-import 'package:my_music/HomePage.dart';
-import 'package:my_music/SearchPage.dart';
-import 'package:my_music/Starting_Page.dart';
+import 'package:flutter/rendering.dart';
+import 'package:my_music/screens/HomePage.dart';
+import 'package:my_music/screens/LibrabyPage.dart';
+import 'package:my_music/screens/LogInPage.dart';
+import 'package:my_music/screens/SearchPage.dart';
+import 'package:my_music/screens/get_started.dart';
+import 'package:my_music/screens/splash_screen.dart';
+import 'package:my_music/utils/app_colors.dart';
 
 void main() {
   runApp(const MyApp());
@@ -37,7 +40,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xff0CC0DF)),
         useMaterial3: true,
       ),
-      home: MyNavigationBar(),
+      home: LogInPage(),
     );
   }
 }
@@ -54,7 +57,8 @@ class _MyNavigationBarState extends State<MyNavigationBar > {
   static const List<Widget> _widgetOptions = <Widget>[
     HomePage(),
     SearchPage(),
-    Text('Library Page', style: TextStyle(fontSize: 35, fontWeight: FontWeight.bold)),
+    Library()
+    // Text('Library Page', style: TextStyle(fontSize: 35, fontWeight: FontWeight.bold)),
   ];
 
   void _onItemTapped(int index) {
@@ -76,7 +80,7 @@ class _MyNavigationBarState extends State<MyNavigationBar > {
                 begin: Alignment.bottomCenter,
                 end: Alignment.topCenter,
                 stops: [0.0, 1.0],
-                colors: [Color(0xff033f49), Colors.black])
+                colors: [AppColors.primaryColor, AppColors.secondaryColor])
         ),
         child: BottomNavigationBar(
           type: BottomNavigationBarType.fixed,
@@ -84,17 +88,20 @@ class _MyNavigationBarState extends State<MyNavigationBar > {
           items: const <BottomNavigationBarItem>[
             BottomNavigationBarItem(
               backgroundColor: Colors.white,
-              icon: Icon(Icons.home),
+              icon: Icon(Icons.home_outlined),
+              activeIcon: Icon(Icons.home),
               label: 'Home',
             ),
             BottomNavigationBarItem(
               backgroundColor: Colors.white,
-              icon: Icon(Icons.search_rounded),
+              icon: Icon(Icons.search),
+              activeIcon: Icon(Icons.search_rounded),
               label: 'Search',
             ),
             BottomNavigationBarItem(
               backgroundColor: Colors.white,
               icon: Icon(Icons.folder_open_sharp),
+              activeIcon: Icon(Icons.folder),
               label: 'library',
             ),
           ],

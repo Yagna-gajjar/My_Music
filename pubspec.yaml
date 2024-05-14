@@ -28,6 +28,7 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
+  flutter_sticky_widgets: ^0.0.3
   google_fonts: ^5.1.0
   carousel_slider: ^4.2.1
   flutter:

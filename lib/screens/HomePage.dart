@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:my_music/Bottom.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -27,7 +26,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // backgroundColor: Colors.black,
+      backgroundColor: Colors.black,
       body: Container(
         height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
@@ -43,7 +42,7 @@ class _HomePageState extends State<HomePage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Container(
-                padding: const EdgeInsets.only(top:15),
+                margin: const EdgeInsets.only(top:60),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -60,7 +59,7 @@ class _HomePageState extends State<HomePage> {
                                   shape: BoxShape.circle,
                                   color: Colors.black,
                                   image: const DecorationImage(
-                                    image: AssetImage('/profile-picture.jpg'),
+                                    image: AssetImage('assets/profile-picture.jpg'),
                                     fit: BoxFit.cover
                                   ),
                                   border: Border.all(
@@ -105,8 +104,8 @@ class _HomePageState extends State<HomePage> {
                                   size: 25,
                                 ),
                                 Positioned(
-                                    top: -1.0,
-                                    left: -1.0,
+                                    top: 1.0,
+                                    left: 2.5,
                                     child:  Stack(
                                       children: <Widget>[
                                         Icon(
@@ -135,20 +134,23 @@ class _HomePageState extends State<HomePage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Container(
-                    margin: const EdgeInsets.only(bottom: 10, top: 40),
+                    margin: const EdgeInsets.only(top: 40),
                     child: Text(
                       "Continue Listing",
                       style: GoogleFonts.varelaRound(
                           color: Colors.white, fontSize: 20),
                     ),
                   ),
-                  GridView.count(
-                    crossAxisCount: 2,
-                    childAspectRatio: (1 / .4),
+                  GridView(
+                    physics: NeverScrollableScrollPhysics(), // Disables scrolling.
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2, // Number of columns
+                      childAspectRatio: (1 / .4), // Aspect ratio of each grid item
+                    ),
                     shrinkWrap: true,
-                    children: List.generate(6, (index) {
-                      return Padding(
-                        padding: const EdgeInsets.only(right: 10, top: 10),
+                    children: List.generate(continue_listning.length, (index) {
+                      return Container(
+                        padding: const EdgeInsets.only(right: 10, top: 8),
                         child: Container(
                           padding: const EdgeInsets.all(1),
                           decoration: BoxDecoration(
@@ -159,7 +161,7 @@ class _HomePageState extends State<HomePage> {
                               ClipRRect(
                                   borderRadius: BorderRadius.circular(10),
                                   child: Image.asset(
-                                    '/image_$index.png',
+                                    'assets/image_$index.png',
                                     fit: BoxFit.cover,
                                   )),
                               Expanded(
@@ -199,7 +201,7 @@ class _HomePageState extends State<HomePage> {
                             child: Stack(
                               children: [
                                 Image.asset(
-                                  '/${top_mixies[index]["name"]}.png',
+                                  'assets/${top_mixies[index]["name"]}.png',
                                   fit: BoxFit.cover,
                                 ),
                                 Positioned(
@@ -257,7 +259,7 @@ class _HomePageState extends State<HomePage> {
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(5),
                               child: Image.asset(
-                                '/image_$index.png',
+                                'assets/image_$index.png',
                                 fit: BoxFit.cover,
                               ),
                             ),
