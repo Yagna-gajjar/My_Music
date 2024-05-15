@@ -28,6 +28,7 @@ class _LogInPageState extends State<LogInPage> {
     return Scaffold(
         backgroundColor: AppColors.secondaryColor,
         appBar: AppBar(
+          surfaceTintColor: AppColors.secondaryColor,
           backgroundColor: AppColors.secondaryColor,
           automaticallyImplyLeading: true,
           iconTheme: const IconThemeData(color: AppColors.primaryColor),
@@ -56,11 +57,12 @@ class _LogInPageState extends State<LogInPage> {
                           if(value.isEmpty){
                             return "Enter Email";
                           }
-                          if(!emailValid) {
+                          else if(!emailValid) {
                             return "Enter Valid Email";
                           }
                           return null;
                         },
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
                         decoration: InputDecoration(
                           hintText: 'Email',
                           hintStyle: GoogleFonts.varelaRound(color: Colors.grey[600]),
@@ -80,7 +82,7 @@ class _LogInPageState extends State<LogInPage> {
                           suffixIcon: IconButton(
                             icon: const Icon(Icons.clear),
                             onPressed: () {
-                              _emailController.text = "";
+                              _emailController.clear();
                             },
                           ),
                         ),
@@ -95,6 +97,7 @@ class _LogInPageState extends State<LogInPage> {
                         keyboardType: TextInputType.text,
                         controller: _passwordController,
                         obscureText: _passwordVisible,
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
                         validator: (value) {
                           bool passValid = RegExp(r"^(?=.*[A-Z])(?=.*[a-z])(?=.*\d).{6,}$").hasMatch(value!);
                           if(value.isEmpty){

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:my_music/screens/Bottom.dart';
 import 'package:my_music/screens/Folder.dart';
 import 'package:my_music/screens/HomePage.dart';
 import 'package:my_music/screens/LibrabyPage.dart';
@@ -54,7 +55,7 @@ class MyNavigationBar extends StatefulWidget {
 }
 
 class _MyNavigationBarState extends State<MyNavigationBar > {
-  int _selectedIndex = 0;
+  int selectedIndex = 0;
   static const List<Widget> _widgetOptions = <Widget>[
     HomePage(),
     SearchPage(),
@@ -64,26 +65,32 @@ class _MyNavigationBarState extends State<MyNavigationBar > {
 
   void _onItemTapped(int index) {
     setState(() {
-      _selectedIndex = index;
+      selectedIndex = index;
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.black,
-      body: Center(
-        child: _widgetOptions.elementAt(_selectedIndex),
-      ),
-      bottomNavigationBar: Container(
-        decoration: BoxDecoration(
-            gradient: LinearGradient(
-                begin: Alignment.bottomCenter,
-                end: Alignment.topCenter,
-                stops: [0.0, 1.0],
-                colors: [AppColors.primaryColor, AppColors.secondaryColor])
+    return Container(
+      height: MediaQuery.of(context).size.height,
+      width: MediaQuery.of(context).size.width,
+      padding: const EdgeInsets.symmetric(horizontal: 32),
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            stops: [0.0, 0.2],
+            colors: [AppColors.primaryColor, AppColors.secondaryColor])
+    ),
+      child: Scaffold(
+        backgroundColor: Colors.transparent,
+        body: Container(
+          padding: EdgeInsets.only(top: 50),
+          child: Center(
+            child: _widgetOptions.elementAt(selectedIndex),
+          ),
         ),
-        child: BottomNavigationBar(
+        bottomNavigationBar: BottomNavigationBar(
           type: BottomNavigationBarType.fixed,
           backgroundColor: Colors.transparent,
           items: const <BottomNavigationBarItem>[
@@ -106,7 +113,7 @@ class _MyNavigationBarState extends State<MyNavigationBar > {
               label: 'library',
             ),
           ],
-          currentIndex: _selectedIndex,
+          currentIndex: selectedIndex,
           onTap: _onItemTapped,
           unselectedItemColor: Colors.white,
           selectedItemColor: Color(0xff0CC0DF),
