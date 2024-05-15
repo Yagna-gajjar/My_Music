@@ -36,7 +36,8 @@ class _HomePageState extends State<HomePage> {
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
                 stops: [0.0, 0.2],
-                colors: [Color(0xff033f49), Colors.black])),
+                colors: [Color(0xff033f49), Colors.black])
+        ),
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,

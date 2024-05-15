@@ -78,7 +78,6 @@ class _GetStartedState extends State<GetStarted> {
       ),
     ),
   ];
-
   int _currentIndex = 0;
 
   @override

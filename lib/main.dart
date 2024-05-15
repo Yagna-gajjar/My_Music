@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:my_music/screens/Folder.dart';
 import 'package:my_music/screens/HomePage.dart';
 import 'package:my_music/screens/LibrabyPage.dart';
 import 'package:my_music/screens/LogInPage.dart';
@@ -40,7 +41,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xff0CC0DF)),
         useMaterial3: true,
       ),
-      home: LogInPage(),
+      home: SplashScreen(),
     );
   }
 }

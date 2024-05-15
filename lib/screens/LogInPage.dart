@@ -1,17 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:my_music/main.dart';
 import 'package:my_music/utils/app_colors.dart';
+import 'dart:async';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LogInPage extends StatefulWidget {
   const LogInPage({super.key});
-
   @override
   State<LogInPage> createState() => _LogInPageState();
 }
-
 class _LogInPageState extends State<LogInPage> {
-
-  TextEditingController _userPasswordController = TextEditingController();
+  final _formField = GlobalKey<FormState>();
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
   bool _passwordVisible = true;
   bool? checkBoxValue = false;
 
@@ -24,204 +26,286 @@ class _LogInPageState extends State<LogInPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.secondaryColor,
-      appBar: AppBar(
         backgroundColor: AppColors.secondaryColor,
-        automaticallyImplyLeading: true,
-        toolbarHeight: 300,
-        iconTheme: IconThemeData(color: AppColors.primaryColor),
-        title: Center(child: Image.asset('assets/logo.png')),
-      ),
-      body: Container(
-        padding: EdgeInsets.only(right: 20, left: 20),
-        child: Column(
-          children: [
-              Text(
-                "Login to your account",
-                style: GoogleFonts.varelaRound(
-                    fontSize: 30,
-                    color: Colors.white),
-              ),
-              Padding(
-                padding: EdgeInsets.only(top: 30),
-                child: TextField(
-                  decoration: InputDecoration(
-                    hintText: 'Email',
-                    hintStyle: GoogleFonts.varelaRound(
-                      color: Colors.grey[600]
-                    ),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10.0),
-                      borderSide: BorderSide(
-                        color: Colors.blue,
-                        width: 2.0,
-                      ),
-                    ),
-                    fillColor: Colors.grey[900],
-                    filled: true,
-                    prefixIcon: Icon(Icons.mail_outline_outlined, color: Colors.grey[600],),
-                    suffixIcon: IconButton(
-                      icon: Icon(Icons.clear),
-                      onPressed: () {
-                        // Clear text field logic here
-                      },
-                    ),
-                  ),
-                  style: TextStyle(
-                    color: Colors.white60, // Change text color here
-                  ),
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.only(top: 30),
-                child: TextField(
-                  keyboardType: TextInputType.text,
-                  controller: _userPasswordController,
-                  obscureText: _passwordVisible,
-                  decoration: InputDecoration(
-                    hintText: 'Password',
-                    hintStyle: GoogleFonts.varelaRound(
-                      color: Colors.grey[600],
-                    ),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10.0),
-                      borderSide: BorderSide(
-                        color: AppColors.primaryColor,
-                        width: 2.0,
-                      ),
-                    ),
-                    fillColor: Colors.grey[900],
-                    filled: true,
-                    prefixIcon: Icon(
-                      Icons.lock_outline,
-                      color: Colors.grey[600],
-                    ),
-                    suffixIcon: IconButton(
-                      icon: Icon(
-                        _passwordVisible
-                            ? Icons.visibility_off
-                            : Icons.visibility,
-                        color: Colors.grey[600],
-                      ),
-                      onPressed: () {
-                        _toggle();
-                      },
-                    ),
-                  ),
-                  style: TextStyle(
-                    color: Colors.white60,
-                  ),
-                ),
-              ),
-              Container(
-          padding: EdgeInsets.all(5),
-          child: CheckboxListTile(
-            title: Text("Remember Me", style: GoogleFonts.varelaRound(color: Colors.white),),
-            value: checkBoxValue,
-              activeColor: AppColors.tertiaryColor,
-              onChanged: (bool? newValue) {
-                setState(() {
-                  checkBoxValue = newValue;
-                });
-              },
-            side: BorderSide(
-              color: AppColors.tertiaryColor
-            ),
-            controlAffinity: ListTileControlAffinity.leading,
-          ),
+        appBar: AppBar(
+          backgroundColor: AppColors.secondaryColor,
+          automaticallyImplyLeading: true,
+          iconTheme: const IconThemeData(color: AppColors.primaryColor),
         ),
-              Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Expanded(
-                  child: ElevatedButton(
-                      onPressed: () {
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => LogInPage(),));
-                      },
-                      child: Container(
-                          padding: EdgeInsets.only(top: 20, bottom: 20),
-                          child: Text(
-                            "Log In",
-                            style: GoogleFonts.varelaRound(
-                                color: Colors.white),
-                          )),
-                      style: ElevatedButton.styleFrom(
-                        primary: AppColors.tertiaryColor,
-                      )),
-                ),
-              ],
-            ),
-              Padding(
-                padding: EdgeInsets.only(top: 20, bottom: 30),
-                child: Text("Forgot the password?", style: GoogleFonts.varelaRound(
-                  color: AppColors.tertiaryColor
-                ),),
-              ),
-              Container(
-                child: Row(
+        body: Container(
+          padding: const EdgeInsets.only(right: 20, left: 20),
+          child: Form(
+            key: _formField,
+            child: SingleChildScrollView(
+              child: Column(
                   children: [
-                    Expanded(
-                      child: Container(
-                        height: 1,
-                        decoration: BoxDecoration(
-                            color: Colors.white,
-                          shape: BoxShape.rectangle
+                    SizedBox(
+                      width: 200,
+                        height: 200,
+                        child: Center(child: Image.asset('assets/logo.png', fit: BoxFit.cover,))),
+                    Text(
+                      "Login to your account",
+                      style: GoogleFonts.varelaRound(fontSize: 30, color: Colors.white),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 30),
+                      child: TextFormField(
+                        controller: _emailController,
+                        validator: (value) {
+                          bool emailValid = RegExp(r"^[\w.-]+@[a-zA-Z\d.-]+\.[a-zA-Z]{2,}$").hasMatch(value!);
+                          if(value.isEmpty){
+                            return "Enter Email";
+                          }
+                          if(!emailValid) {
+                            return "Enter Valid Email";
+                          }
+                          return null;
+                        },
+                        decoration: InputDecoration(
+                          hintText: 'Email',
+                          hintStyle: GoogleFonts.varelaRound(color: Colors.grey[600]),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10.0),
+                            borderSide: const BorderSide(
+                              color: Colors.blue,
+                              width: 2.0,
+                            ),
+                          ),
+                          fillColor: Colors.grey[900],
+                          filled: true,
+                          prefixIcon: Icon(
+                            Icons.mail_outline_outlined,
+                            color: Colors.grey[600],
+                          ),
+                          suffixIcon: IconButton(
+                            icon: const Icon(Icons.clear),
+                            onPressed: () {
+                              _emailController.text = "";
+                            },
+                          ),
+                        ),
+                        style: const TextStyle(
+                          color: Colors.white60, // Change text color here
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 30),
+                      child: TextFormField(
+                        keyboardType: TextInputType.text,
+                        controller: _passwordController,
+                        obscureText: _passwordVisible,
+                        validator: (value) {
+                          bool passValid = RegExp(r"^(?=.*[A-Z])(?=.*[a-z])(?=.*\d).{6,}$").hasMatch(value!);
+                          if(value.isEmpty){
+                            return "Enter password";
+                          }
+                          else if(_passwordController.text.length < 6){
+                            return "Password length should not be less then 6 character";
+                          }
+                          else if(!passValid){
+                            return "password should contains at least digit, capital letter and small letter";
+                          }
+                          return null;
+                        },
+                        decoration: InputDecoration(
+                          hintText: 'Password',
+                          hintStyle: GoogleFonts.varelaRound(
+                            color: Colors.grey[600],
+                          ),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10.0),
+                            borderSide: const BorderSide(
+                              color: AppColors.primaryColor,
+                              width: 2.0,
+                            ),
+                          ),
+                          fillColor: Colors.grey[900],
+                          filled: true,
+                          prefixIcon: Icon(
+                            Icons.lock_outline,
+                            color: Colors.grey[600],
+                          ),
+                          suffixIcon: IconButton(
+                            icon: Icon(
+                              _passwordVisible
+                                  ? Icons.visibility_off
+                                  : Icons.visibility,
+                              color: Colors.grey[600],
+                            ),
+                            onPressed: () {
+                              _toggle();
+                            },
+                          ),
+                        ),
+                        style: const TextStyle(
+                          color: Colors.white60,
                         ),
                       ),
                     ),
                     Container(
-                      padding: EdgeInsets.all(10),
-                      child: Text("or continue with", style: GoogleFonts.varelaRound(
-                        color: Colors.white
-                      ),),
-                    ),
-                    Expanded(
-                      child: Container(
-                        height: 1,
-                        decoration: BoxDecoration(
-                            color: Colors.white,
-                            shape: BoxShape.rectangle
+                      padding: const EdgeInsets.all(5),
+                      child: CheckboxListTile(
+                        title: Text(
+                          "Remember Me",
+                          style: GoogleFonts.varelaRound(color: Colors.white),
                         ),
+                        value: checkBoxValue,
+                        activeColor: AppColors.tertiaryColor,
+                        onChanged: (bool? newValue) {
+                          setState(() {
+                            checkBoxValue = newValue;
+                          });
+                        },
+                        side: const BorderSide(color: AppColors.tertiaryColor),
+                        controlAffinity: ListTileControlAffinity.leading,
                       ),
                     ),
-                  ],
-                ),
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Container(
-                    height: 50,
-                    width: 50,
-                    decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        border: Border.all(color: Colors.grey, width: 1, style: BorderStyle.solid)
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Expanded(
+                          child: ElevatedButton(
+                              onPressed: () async {
+                                if(_formField.currentState!.validate()){
+                                  if(checkBoxValue!) {
+                                    final Future<
+                                        SharedPreferences> prefs0 = SharedPreferences
+                                        .getInstance();
+                                    final SharedPreferences prefs = await prefs0;
+                                    await prefs.setString(
+                                        'email', _emailController.text);
+                                    await prefs.setString('password',
+                                        _passwordController.text.trim());
+                                  }
+                                  _emailController.clear();
+                                  _passwordController.clear();
+                                  Navigator.push(context, MaterialPageRoute(builder: (context) => MyNavigationBar(),));
+                                }
+                              },
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: AppColors.tertiaryColor,
+                              ),
+                              child: Container(
+                                  padding: const EdgeInsets.only(top: 20, bottom: 20),
+                                  child: Text(
+                                    "Log In",
+                                    style: GoogleFonts.varelaRound(color: Colors.white),
+                                  ))),
+                        ),
+                      ],
                     ),
-                    child: Image.asset('assets/logo.png', fit: BoxFit.cover,),
-                  ),
-                  Container(
-                    height: 50,
-                    width: 50,
-                    decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        border: Border.all(color: Colors.grey, width: 1, style: BorderStyle.solid)
+                    Padding(
+                      padding: const EdgeInsets.only(top: 20, bottom: 30),
+                      child: Text(
+                        "Forgot the password?",
+                        style: GoogleFonts.varelaRound(color: AppColors.tertiaryColor),
+                      ),
                     ),
-                    child: Image.asset('assets/logo.png', fit: BoxFit.cover,),
-                  ),
-                  Container(
-                    height: 50,
-                    width: 50,
-                    decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        border: Border.all(color: Colors.grey, width: 1, style: BorderStyle.solid)
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Container(
+                            height: 1,
+                            decoration: const BoxDecoration(
+                                color: Colors.white, shape: BoxShape.rectangle),
+                          ),
+                        ),
+                        Container(
+                          padding: const EdgeInsets.all(10),
+                          child: Text(
+                            "or continue with",
+                            style: GoogleFonts.varelaRound(color: Colors.white),
+                          ),
+                        ),
+                        Expanded(
+                          child: Container(
+                            height: 1,
+                            decoration: const BoxDecoration(
+                                color: Colors.white, shape: BoxShape.rectangle),
+                          ),
+                        ),
+                      ],
                     ),
-                    child: Image.asset('assets/logo.png', fit: BoxFit.cover,),
-                  ),
-                ],
-              )
-            ]
+                    Container(
+                      padding: const EdgeInsets.only(top: 20),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Container(
+                            height: 50,
+                            width: 50,
+                            decoration: BoxDecoration(
+                                color: Colors.grey[900],
+                                shape: BoxShape.circle,
+                                border: Border.all(
+                                    color: Colors.grey,
+                                    width: 1,
+                                    style: BorderStyle.solid)),
+                            child: Container(
+                                padding: const EdgeInsets.all(10),
+                                child: Image.asset(
+                                  'assets/google.png',
+                                  fit: BoxFit.cover,
+                                )),
+                          ),
+                          Container(
+                            height: 50,
+                            width: 50,
+                            decoration: BoxDecoration(
+                                color: Colors.grey[900],
+                                shape: BoxShape.circle,
+                                border: Border.all(
+                                    color: Colors.grey,
+                                    width: 1,
+                                    style: BorderStyle.solid)),
+                            child: Container(
+                                padding: const EdgeInsets.all(10),
+                                child: Image.asset(
+                                  'assets/facebook.png',
+                                  fit: BoxFit.cover,
+                                )),
+                          ),
+                          Container(
+                            height: 50,
+                            width: 50,
+                            decoration: BoxDecoration(
+                                color: Colors.grey[900],
+                                shape: BoxShape.circle,
+                                border: Border.all(
+                                    color: Colors.grey,
+                                    width: 1,
+                                    style: BorderStyle.solid)),
+                            child: Container(
+                                padding: const EdgeInsets.all(10),
+                                child: Image.asset(
+                                  'assets/apple.png',
+                                  fit: BoxFit.cover,
+                                )),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Container(
+                  padding: const EdgeInsets.only(top: 40, bottom: 40),
+                  child: RichText(
+                      textAlign: TextAlign.center,
+                      text: TextSpan(
+                          style: const TextStyle(color: Colors.white),
+                          children: [
+                            const TextSpan(
+                              text: 'Don\'t have an account? ',
+                            ),
+                            TextSpan(
+                              text: 'Sign Up',
+                              style: GoogleFonts.varelaRound(
+                                  color: AppColors.tertiaryColor),
+                            ),
+                          ])),
+                )
+                ]),
+            ),
           ),
-      )
-      );
+        ));
   }
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:my_music/utils/app_colors.dart';
 
 class Library extends StatefulWidget {
   const Library({super.key});
@@ -10,16 +11,14 @@ class Library extends StatefulWidget {
 
 class _LibraryState extends State<Library> {
   List Catagory = [
-    {"name": "Folder", "color": Colors.white12},
-    {"name": "Playlist","color": Colors.white12},
-    {"name": "Artists","color": Colors.white12},
-    {"name": "Albums","color": Colors.white12},
-    {"name": "Podcast & Shows","color": Colors.white12},
+    {"name": "Folder"},
+    {"name": "Playlist"},
+    {"name": "Artists"},
+    {"name": "Albums"},
+    {"name": "Podcast & Shows"},
   ];
 
-  String _selected = "";
-
-  int tappedIndex = 0;
+  int _tappedIndex = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +44,7 @@ class _LibraryState extends State<Library> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Container(
-                      margin: EdgeInsets.only(top: 60),
+                      margin: const EdgeInsets.only(top: 60),
                       child: Row(
                         children: [
                           SizedBox(
@@ -79,18 +78,30 @@ class _LibraryState extends State<Library> {
                     scrollDirection: Axis.horizontal,
                     itemCount: Catagory.length,
                     itemBuilder: (BuildContext context, int index) {
-                    return Container(
-                        margin: const EdgeInsets.only(right: 10),
-                        padding: const EdgeInsets.only(right: 10, left: 10, top: 5, bottom: 5),
-                        decoration: BoxDecoration(
-                          color: Catagory[index]["color"],
-                          borderRadius: BorderRadius.circular(50),
+                    return InkWell(
+                      onTap: () {
+                        setState(() {
+                          _tappedIndex = index;
+                        });
+                      },
+                      child: Container(
+                          margin: const EdgeInsets.only(right: 10),
+                          padding: const EdgeInsets.only(right: 10, left: 10, top: 5, bottom: 5),
+                          decoration: BoxDecoration(
+                            color: _tappedIndex == index ? AppColors.primaryColor : Colors.white12,
+                            borderRadius: BorderRadius.circular(50),
+                          ),
+                          child: Text(Catagory[index]["name"], style: GoogleFonts.varelaRound(
+                              color: Colors.white,
+                          ),),
                         ),
-                        child: Text(Catagory[index]["name"], style: GoogleFonts.varelaRound(
-                            color: Colors.white,
-                        ),),
-                      );
+                    );
                   }
+                ),
+              ),
+              Container(
+                child: Center(
+                    child: Text(Catagory[_tappedIndex]["name"]),
                 ),
               )
             ],
