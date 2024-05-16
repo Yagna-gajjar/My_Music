@@ -127,6 +127,7 @@ class _FolderState extends State<Folder> {
                               ),
                               Text("${Folders[index]["numberofplaylist"
                                 ]} playlist",
+                                overflow: TextOverflow.ellipsis,
                                 style: GoogleFonts.varelaRound(
                                     fontSize: 15,
                                     color: Colors.white60

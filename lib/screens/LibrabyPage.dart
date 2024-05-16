@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:my_music/screens/Artists.dart';
 import 'package:my_music/screens/Folder.dart';
 import 'package:my_music/screens/Playlist.dart';
 import 'package:my_music/utils/app_colors.dart';
@@ -26,9 +27,7 @@ class _LibraryState extends State<Library> {
   static const List<Widget> _widgetOptions = <Widget>[
     Folder(),
     Playlist(),
-    Center(child: Text("Artists",
-      style: TextStyle(color: Colors.white),
-    )),
+    Artists(),
     Center(child: Text("Albums",
       style: TextStyle(color: Colors.white),
     )),

@@ -1,3 +1,5 @@
+import 'dart:js_interop';
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:my_music/utils/app_colors.dart';
@@ -42,36 +44,11 @@ class _ArtistsState extends State<Artists> {
                     Icons.add, color: AppColors.secondaryColor,
                   ),
                 ),
-                Text("Add New Playlist",
+                Text("Add Artists",
                   style: GoogleFonts.varelaRound(
                     color: AppColors.fourthColor,
                     fontSize: 15,
                   ),)
-              ],
-            ),
-          ),
-          Container(
-            padding: const EdgeInsets.only(top: 20),
-            margin: const EdgeInsets.symmetric(horizontal: 16),
-            child: Row(
-              children: [
-                Container(
-                    padding: const EdgeInsets.all(10),
-                    margin: const EdgeInsets.only(right: 20),
-                    decoration: const BoxDecoration(
-                        gradient: LinearGradient(
-                            begin: Alignment.topCenter,
-                            end: Alignment.bottomCenter,
-                            stops: [0.0, 0.5],
-                            colors: [Color(0xffA6F3FF), AppColors.tertiaryColor]),
-                        shape: BoxShape.circle
-                    ),
-                    child: const Icon(Icons.favorite_outline, color: AppColors.secondaryColor)),
-                Text("Your Liked Songs",
-                    style: GoogleFonts.varelaRound(
-                      color: AppColors.fourthColor,
-                      fontSize: 15,
-                    ))
               ],
             ),
           ),
@@ -107,37 +84,33 @@ class _ArtistsState extends State<Artists> {
               shrinkWrap: true,
               children: List.generate(Artists.length, (index) {
                 return Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    const Icon(
-                      Icons.folder_copy,
-                      size: 50,
-                      color: AppColors.fourthColor,),
+                    Container(
+                      width: 80,
+                      height: 80,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        image: DecorationImage(
+                            image: AssetImage(Artists[index]["image"]),
+                            fit: BoxFit.cover
+                        ),
+                      ),
+                    ),
                     Container(
                         margin: const EdgeInsets.symmetric(horizontal: 32),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start ,
-                          children: [
-                            Text(Artists[index]["name"],
-                              style: GoogleFonts.varelaRound(
-                                  fontSize: 20,
-                                  color: AppColors.fourthColor
-                              ),
-                            ),
-                            Text("${Artists[index]["numberofplaylist"
-                            ]} playlist",
-                              style: GoogleFonts.varelaRound(
-                                  fontSize: 15,
-                                  color: Colors.white60
-                              ),),
-                          ],
+                        child: Text(Artists[index]["name"],
+                          style: GoogleFonts.varelaRound(
+                              fontSize: 16,
+                              color: AppColors.fourthColor
+                          ),
                         ))
                   ],
                 );
               }
               ),
             ),
-          )
+          ),
         ],
       ),
     );

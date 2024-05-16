@@ -12,13 +12,13 @@ class Playlist extends StatefulWidget {
 class _PlaylistState extends State<Playlist> {
 
   List Playlists = [
-    {"name": "morning vibes", "numberofsongs": 31},
-    {"name": "Travaling", "numberofsongs": 20},
-    {"name": "Navratri Non-Stop", "numberofsongs": 24},
-    {"name": "24/7", "numberofsongs": 18},
-    {"name": "All Time", "numberofsongs": 40},
-    {"name": "Bollywood hits", "numberofsongs": 36},
-    {"name": "Hollywood hits", "numberofsongs": 29},
+    {"name": "morning vibes", "numberofsongs": 31, "image": "assets/image_0.png"},
+    {"name": "Travaling", "numberofsongs": 20, "image": "assets/image_1.png"},
+    {"name": "Navratri Non-Stop", "numberofsongs": 24, "image": "assets/image_2.png"},
+    {"name": "24/7", "numberofsongs": 18, "image": "assets/image_3.png"},
+    {"name": "All Time", "numberofsongs": 40, "image": "assets/image_4.png"},
+    {"name": "Bollywood hits", "numberofsongs": 36, "image": "assets/image_5.png"},
+    {"name": "Hollywood hits", "numberofsongs": 29, "image": "assets/image_0.png"},
   ];
 
   @override
@@ -109,33 +109,45 @@ class _PlaylistState extends State<Playlist> {
               ),
               shrinkWrap: true,
               children: List.generate(Playlists.length, (index) {
-                return Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Icon(
-                      Icons.folder_copy,
-                      size: 50,
-                      color: AppColors.fourthColor,),
-                    Container(
-                        margin: const EdgeInsets.symmetric(horizontal: 32),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start ,
-                          children: [
-                            Text(Playlists[index]["name"],
-                              style: GoogleFonts.varelaRound(
-                                  fontSize: 20,
-                                  color: AppColors.fourthColor
+                return SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  physics: const NeverScrollableScrollPhysics(),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        width: 80,
+                        height: 80,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          image: DecorationImage(
+                              image: AssetImage(Playlists[index]["image"]),
+                              fit: BoxFit.cover
+                          ),
+                        ),
+                      ),
+                      Container(
+                          margin: const EdgeInsets.symmetric(horizontal: 32),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start ,
+                            children: [
+                              Text(Playlists[index]["name"],
+                                style: GoogleFonts.varelaRound(
+                                    fontSize: 20,
+                                    color: AppColors.fourthColor
+                                ),
                               ),
-                            ),
-                            Text("${Playlists[index]["numberofplaylist"
-                            ]} playlist",
-                              style: GoogleFonts.varelaRound(
-                                  fontSize: 15,
-                                  color: Colors.white60
-                              ),),
-                          ],
-                        ))
-                  ],
+                              Text("${Playlists[index]["numberofplaylist"
+                              ]} Songs",
+                                overflow: TextOverflow.ellipsis,
+                                style: GoogleFonts.varelaRound(
+                                    fontSize: 15,
+                                    color: Colors.white60
+                                ),),
+                            ],
+                          ))
+                    ],
+                  ),
                 );
               }
               ),
