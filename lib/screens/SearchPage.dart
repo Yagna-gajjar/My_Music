@@ -135,6 +135,7 @@ class _SearchPageState extends State<SearchPage> {
                   ),
                 ),
                 GridView(
+                  padding: EdgeInsets.zero,
                   physics: const NeverScrollableScrollPhysics(), // Disables scrolling.
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2, // Number of columns

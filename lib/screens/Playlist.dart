@@ -102,6 +102,7 @@ class _PlaylistState extends State<Playlist> {
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 16),
             child: GridView(
+              padding: EdgeInsets.zero,
               physics: const NeverScrollableScrollPhysics(), // Disables scrolling.
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 1,

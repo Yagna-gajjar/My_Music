@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:my_music/main.dart';
+import 'package:my_music/screens/bottom_navigation_bar.dart';
 import 'package:my_music/screens/get_started.dart';
 import 'package:my_music/utils/app_colors.dart';
 import 'package:shared_preferences/shared_preferences.dart';

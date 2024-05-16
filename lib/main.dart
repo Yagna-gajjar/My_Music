@@ -1,14 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-import 'package:my_music/screens/Bottom.dart';
-import 'package:my_music/screens/Folder.dart';
-import 'package:my_music/screens/HomePage.dart';
-import 'package:my_music/screens/LibrabyPage.dart';
-import 'package:my_music/screens/LogInPage.dart';
-import 'package:my_music/screens/SearchPage.dart';
-import 'package:my_music/screens/get_started.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:my_music/screens/splash_screen.dart';
-import 'package:my_music/utils/app_colors.dart';
 
 void main() {
   runApp(const MyApp());
@@ -23,102 +15,21 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
+      localizationsDelegates: const [
+        DefaultMaterialLocalizations.delegate,
+        DefaultWidgetsLocalizations.delegate,
+      ],
+      supportedLocales: const [
+        Locale('en', 'US'),
+        Locale('hi', 'IN'),
+        Locale('gu', 'IN')
+      ],
       theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // TRY THIS: Try running your application with "flutter run". You'll see
-        // the application has a purple toolbar. Then, without quitting the app,
-        // try changing the seedColor in the colorScheme below to Colors.green
-        // and then invoke "hot reload" (save your changes or press the "hot
-        // reload" button in a Flutter-supported IDE, or press "r" if you used
-        // the command line to start the app).
-        //
-        // Notice that the counter didn't reset back to zero; the application
-        // state is not lost during the reload. To reset the state, use hot
-        // restart instead.
-        //
-        // This works for code too, not just values: Most code changes can be
-        // tested with just a hot reload.
+        textTheme: GoogleFonts.tiroDevanagariHindiTextTheme(),
         colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xff0CC0DF)),
         useMaterial3: true,
       ),
-      home: SplashScreen(),
-    );
-  }
-}
-
-class MyNavigationBar extends StatefulWidget {
-  MyNavigationBar({super.key});
-
-  @override
-  _MyNavigationBarState createState() => _MyNavigationBarState();
-}
-
-class _MyNavigationBarState extends State<MyNavigationBar > {
-  int selectedIndex = 0;
-  static const List<Widget> _widgetOptions = <Widget>[
-    HomePage(),
-    SearchPage(),
-    Library()
-    // Text('Library Page', style: TextStyle(fontSize: 35, fontWeight: FontWeight.bold)),
-  ];
-
-  void _onItemTapped(int index) {
-    setState(() {
-      selectedIndex = index;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: MediaQuery.of(context).size.height,
-      width: MediaQuery.of(context).size.width,
-      padding: const EdgeInsets.symmetric(horizontal: 32),
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            stops: [0.0, 0.2],
-            colors: [AppColors.primaryColor, AppColors.secondaryColor])
-    ),
-      child: Scaffold(
-        backgroundColor: Colors.transparent,
-        body: Container(
-          padding: EdgeInsets.only(top: 50),
-          child: Center(
-            child: _widgetOptions.elementAt(selectedIndex),
-          ),
-        ),
-        bottomNavigationBar: BottomNavigationBar(
-          type: BottomNavigationBarType.fixed,
-          backgroundColor: Colors.transparent,
-          items: const <BottomNavigationBarItem>[
-            BottomNavigationBarItem(
-              backgroundColor: Colors.white,
-              icon: Icon(Icons.home_outlined),
-              activeIcon: Icon(Icons.home),
-              label: 'Home',
-            ),
-            BottomNavigationBarItem(
-              backgroundColor: Colors.white,
-              icon: Icon(Icons.search),
-              activeIcon: Icon(Icons.search_rounded),
-              label: 'Search',
-            ),
-            BottomNavigationBarItem(
-              backgroundColor: Colors.white,
-              icon: Icon(Icons.folder_open_sharp),
-              activeIcon: Icon(Icons.folder),
-              label: 'library',
-            ),
-          ],
-          currentIndex: selectedIndex,
-          onTap: _onItemTapped,
-          unselectedItemColor: Colors.white,
-          selectedItemColor: Color(0xff0CC0DF),
-        ),
-      ),
+      home: const SplashScreen(),
     );
   }
 }

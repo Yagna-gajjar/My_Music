@@ -23,7 +23,6 @@ class _LibraryState extends State<Library> {
 
   int _tappedIndex = 0;
 
-
   static const List<Widget> _widgetOptions = <Widget>[
     Folder(),
     Playlist(),

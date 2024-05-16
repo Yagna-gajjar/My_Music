@@ -1,14 +1,18 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:my_music/screens/Languages.dart';
+import 'package:my_music/utils/app_colors.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
-
   @override
   State<HomePage> createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
+  Map<String, dynamic> localizedStrings = {};
   List continue_listning = [
     "coffee & jazz",
     "lofi beats",
@@ -22,6 +26,19 @@ class _HomePageState extends State<HomePage> {
     {"name": "Chill", "color": Colors.yellow},
     {"name": "kpop", "color": Colors.green}
   ];
+  Future<void> loadLocalizedStrings() async {
+    String jsonString = await rootBundle.loadString('assets/string.json');
+        setState(() {
+      localizedStrings = json.decode(jsonString);
+    });
+  }
+  @override
+  void initState() {
+    super.initState();
+    loadLocalizedStrings();
+  }
+
+  int IconIndex = -1;
 
   @override
   Widget build(BuildContext context) {
@@ -75,25 +92,33 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
                 Expanded(
-                  child: Container(
-                    child: const Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Icon(
-                          Icons.bar_chart,
-                          color: Colors.white,
-                          size: 25,
+                  child: Row(
+                    // mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      Expanded(
+                        child: IconButton(
+                          onPressed: () {},
+                          icon: const Icon(
+                            Icons.bar_chart,
+                            color: Colors.white,
+                            size: 25,
+                          ),
                         ),
-                        Stack(
+                      ),
+                      Expanded(
+                        child: Stack(
                           children: [
-                            Icon(
-                              Icons.notifications_outlined,
-                              color: Colors.white,
-                              size: 25,
+                            IconButton(
+                              onPressed: () {},
+                              icon: const Icon(
+                                Icons.notifications_outlined,
+                                color: Colors.white,
+                                size: 25,
+                              ),
                             ),
-                            Positioned(
-                                top: 1.0,
-                                left: 2.5,
+                            const Positioned(
+                                top: 10,
+                                left: 10,
                                 child:  Stack(
                                   children: <Widget>[
                                     Icon(
@@ -106,13 +131,59 @@ class _HomePageState extends State<HomePage> {
                             ),
                           ],
                         ),
-                        Icon(
-                          Icons.settings,
-                          color: Colors.white,
-                          size: 25,
+                      ),
+                      Expanded(
+                        child: InkWell(
+                          onTap: (){
+                            Navigator.push(context, MaterialPageRoute(builder: (context) => const Languages()));
+                          },
+                          child: IconButton(
+                            onPressed: () {
+                            showMenu(
+                                color: AppColors.tertiaryColor,
+                                context: context,
+                                position: const RelativeRect.fromLTRB(100, 100, 30, 0),
+                                items: [
+                                  PopupMenuItem(
+                                    value: 1,
+                                    child: Row(
+                                      children: [
+                                        const Padding(
+                                          padding: EdgeInsets.symmetric(horizontal: 8),
+                                          child: Icon(Icons.language, color: AppColors.primaryColor,),
+                                        ),
+                                        Text("Languages", style: GoogleFonts.varelaRound(
+                                          fontSize: 15, color: AppColors.primaryColor,
+                                        ),)
+                                      ],
+                                    ),
+                                  ),
+                                  PopupMenuItem(
+                                    value: 1,
+                                    child: Row(
+                                      children: [
+                                        const Padding(
+                                          padding: EdgeInsets.symmetric(horizontal: 8),
+                                          child: Icon(Icons.logout, color: AppColors.primaryColor,),
+                                        ),
+                                        Text("Log out", style: GoogleFonts.varelaRound(
+                                            fontSize: 15,
+                                            color: AppColors.primaryColor
+                                        ),)
+                                      ],
+                                    ),
+                                  ),
+                                ]);
+                            },
+                            icon: const Icon(
+                            Icons.settings,
+                            color: Colors.white,
+                            size: 25,
+                          ),
+                          ),
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                 ),
               ],
@@ -130,8 +201,8 @@ class _HomePageState extends State<HomePage> {
                 ),
                 GridView(
                   padding: EdgeInsets.zero,
-                  physics: NeverScrollableScrollPhysics(), // Disables scrolling.
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  physics: const NeverScrollableScrollPhysics(), // Disables scrolling.
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2, // Number of columns
                     childAspectRatio: (1 / .4), // Aspect ratio of each grid item
                   ),

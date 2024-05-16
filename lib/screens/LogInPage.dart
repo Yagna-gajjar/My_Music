@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:my_music/main.dart';
+import 'package:my_music/screens/bottom_navigation_bar.dart';
 import 'package:my_music/utils/app_colors.dart';
 import 'dart:async';
 import 'package:shared_preferences/shared_preferences.dart';

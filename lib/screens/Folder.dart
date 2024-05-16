@@ -100,6 +100,7 @@ class _FolderState extends State<Folder> {
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: GridView(
+                padding: EdgeInsets.zero,
                 physics: const NeverScrollableScrollPhysics(), // Disables scrolling.
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 1,

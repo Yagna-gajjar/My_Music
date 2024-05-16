@@ -1,5 +1,3 @@
-import 'dart:js_interop';
-
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:my_music/utils/app_colors.dart';
@@ -76,6 +74,7 @@ class _ArtistsState extends State<Artists> {
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 16),
             child: GridView(
+              padding: EdgeInsets.zero,
               physics: const NeverScrollableScrollPhysics(), // Disables scrolling.
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 1,
