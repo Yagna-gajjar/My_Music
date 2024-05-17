@@ -3,6 +3,7 @@ import 'package:my_music/screens/HomePage.dart';
 import 'package:my_music/screens/LibrabyPage.dart';
 import 'package:my_music/screens/SearchPage.dart';
 import 'package:my_music/utils/app_colors.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart' ;
 
 class MyNavigationBar extends StatefulWidget {
   MyNavigationBar({super.key});
@@ -50,24 +51,24 @@ class _MyNavigationBarState extends State<MyNavigationBar > {
         bottomNavigationBar: BottomNavigationBar(
           type: BottomNavigationBarType.fixed,
           backgroundColor: Colors.transparent,
-          items: const <BottomNavigationBarItem>[
+          items: <BottomNavigationBarItem>[
             BottomNavigationBarItem(
               backgroundColor: Colors.white,
               icon: Icon(Icons.home_outlined),
               activeIcon: Icon(Icons.home),
-              label: 'Home',
+              label: AppLocalizations.of(context)!.home,
             ),
             BottomNavigationBarItem(
               backgroundColor: Colors.white,
               icon: Icon(Icons.search),
               activeIcon: Icon(Icons.search_rounded),
-              label: 'Search',
+              label: AppLocalizations.of(context)!.explore,
             ),
             BottomNavigationBarItem(
               backgroundColor: Colors.white,
               icon: Icon(Icons.folder_open_sharp),
               activeIcon: Icon(Icons.folder),
-              label: 'library',
+              label: AppLocalizations.of(context)!.library,
             ),
           ],
           currentIndex: selectedIndex,

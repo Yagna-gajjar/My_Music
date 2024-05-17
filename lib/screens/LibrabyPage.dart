@@ -4,6 +4,7 @@ import 'package:my_music/screens/Artists.dart';
 import 'package:my_music/screens/Folder.dart';
 import 'package:my_music/screens/Playlist.dart';
 import 'package:my_music/utils/app_colors.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class Library extends StatefulWidget {
   const Library({super.key});
@@ -14,7 +15,7 @@ class Library extends StatefulWidget {
 
 class _LibraryState extends State<Library> {
   List Catagory = [
-    {"name": "Folder"},
+    {"name": "folder"},
     {"name": "Playlist"},
     {"name": "Artists"},
     {"name": "Albums"},
@@ -57,7 +58,7 @@ class _LibraryState extends State<Library> {
                             fit: BoxFit.cover,
                           )),
                       Text(
-                        "Your Library",
+                        AppLocalizations.of(context)!.your_library,
                         style: GoogleFonts.varelaRound(
                             color: const Color(0xff0CC0DF),
                             fontSize: 25,

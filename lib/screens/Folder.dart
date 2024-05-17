@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:my_music/utils/app_colors.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class Folder extends StatefulWidget {
   const Folder({super.key});
@@ -43,7 +44,7 @@ class _FolderState extends State<Folder> {
                       Icons.add, color: AppColors.secondaryColor,
                     ),
                   ),
-                  Text("Add New Folder",
+                  Text(AppLocalizations.of(context)!.add_folder,
                     style: GoogleFonts.varelaRound(
                         color: AppColors.fourthColor,
                         fontSize: 15,
@@ -68,7 +69,7 @@ class _FolderState extends State<Folder> {
                           shape: BoxShape.circle
                       ),
                       child: const Icon(Icons.favorite_outline, color: AppColors.secondaryColor)),
-                  Text("Your Liked Playlist",
+                  Text(AppLocalizations.of(context)!.liked +" "+ AppLocalizations.of(context)!.playlist,
                       style: GoogleFonts.varelaRound(
                           color: AppColors.fourthColor,
                           fontSize: 15,

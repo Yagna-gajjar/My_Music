@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:my_music/main.dart';
 import 'package:my_music/screens/bottom_navigation_bar.dart';
 import 'package:my_music/screens/get_started.dart';
+import 'package:my_music/utils/Controllers.dart';
 import 'package:my_music/utils/app_colors.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -17,7 +18,6 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
 
     Timer(Duration(seconds: 3), () async {
@@ -32,14 +32,14 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   Future<bool> _getEmail() async {
-    final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
-    final SharedPreferences prefs = await _prefs;
-    if(prefs.getString('email') == null){
+    String? result = await Controllers.StringGet(key: 'email');
+    if(result == null){
       return false;
     }
     else {
       return true;
     }
+
   }
 
   @override

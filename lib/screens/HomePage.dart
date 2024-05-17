@@ -2,8 +2,10 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:my_music/screens/Languages.dart';
+import 'package:my_music/main.dart';
+import 'package:my_music/utils/Controllers.dart';
 import 'package:my_music/utils/app_colors.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -12,7 +14,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  Map<String, dynamic> localizedStrings = {};
   List continue_listning = [
     "coffee & jazz",
     "lofi beats",
@@ -26,20 +27,8 @@ class _HomePageState extends State<HomePage> {
     {"name": "Chill", "color": Colors.yellow},
     {"name": "kpop", "color": Colors.green}
   ];
-  Future<void> loadLocalizedStrings() async {
-    String jsonString = await rootBundle.loadString('assets/string.json');
-        setState(() {
-      localizedStrings = json.decode(jsonString);
-    });
-  }
-  @override
-  void initState() {
-    super.initState();
-    loadLocalizedStrings();
-  }
 
   int IconIndex = -1;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -74,11 +63,12 @@ class _HomePageState extends State<HomePage> {
                               )
                           ),
                         ),
-                        Container(
+                        Expanded(
                           child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text("Welcome Back!",
+                                Text(AppLocalizations.of(context)!.welcome_message,
+                                    overflow: TextOverflow.ellipsis,
                                     style: GoogleFonts.varelaRound(
                                         color: Colors.white, fontSize: 17)),
                                 Text("Yagna Gajjar",
@@ -133,54 +123,79 @@ class _HomePageState extends State<HomePage> {
                         ),
                       ),
                       Expanded(
-                        child: InkWell(
-                          onTap: (){
-                            Navigator.push(context, MaterialPageRoute(builder: (context) => const Languages()));
+                        child: IconButton(
+                          onPressed: () {
+                          showMenu(
+                              color: AppColors.tertiaryColor,
+                              context: context,
+                              position: const RelativeRect.fromLTRB(100, 100, 30, 0),
+                              items: [
+                                PopupMenuItem(
+                                  value: 1,
+                                  onTap: (){
+                                    showMenu(
+                                        color: AppColors.tertiaryColor,
+                                        context: context,
+                                        position: const RelativeRect.fromLTRB(100, 100, 30, 0),
+                                        items: [
+                                          PopupMenuItem(
+                                            onTap: () {
+                                              MyApp.setLocale(context, Locale('en', ''));
+                                              Controllers.StringSet(key: 'lan', value: 'en');
+                                            },
+                                              value: 1,
+                                              child: Text("English", style: GoogleFonts.varelaRound(),)),
+                                          PopupMenuItem(
+                                              onTap: () {
+                                                MyApp.setLocale(context, Locale('hi', ''));
+                                                Controllers.StringSet(key: 'lan', value: 'hi');
+                                              },
+                                              value: 1,
+                                              child: Text("हिन्दी", style: GoogleFonts.varelaRound())),
+                                          PopupMenuItem(
+                                              onTap: () {
+                                                MyApp.setLocale(context, Locale('gu', ''));
+                                                Controllers.StringSet(key: 'lan', value: 'gu');
+                                              },
+                                              value: 1,
+                                              child: Text("ગુજરાતી", style: GoogleFonts.varelaRound())),
+                                        ]);
+                                    // Navigator.push(context, MaterialPageRoute(builder: (context) => const Languages()));
+                                  },
+                                  child: Row(
+                                    children: [
+                                      const Padding(
+                                        padding: EdgeInsets.symmetric(horizontal: 8),
+                                        child: Icon(Icons.language, color: AppColors.primaryColor,),
+                                      ),
+                                      Text("Languages", style: GoogleFonts.varelaRound(
+                                        fontSize: 15, color: AppColors.primaryColor,
+                                      ),)
+                                    ],
+                                  ),
+                                ),
+                                PopupMenuItem(
+                                  value: 1,
+                                  child: Row(
+                                    children: [
+                                      const Padding(
+                                        padding: EdgeInsets.symmetric(horizontal: 8),
+                                        child: Icon(Icons.logout, color: AppColors.primaryColor,),
+                                      ),
+                                      Text("Log out", style: GoogleFonts.varelaRound(
+                                          fontSize: 15,
+                                          color: AppColors.primaryColor
+                                      ),)
+                                    ],
+                                  ),
+                                ),
+                              ]);
                           },
-                          child: IconButton(
-                            onPressed: () {
-                            showMenu(
-                                color: AppColors.tertiaryColor,
-                                context: context,
-                                position: const RelativeRect.fromLTRB(100, 100, 30, 0),
-                                items: [
-                                  PopupMenuItem(
-                                    value: 1,
-                                    child: Row(
-                                      children: [
-                                        const Padding(
-                                          padding: EdgeInsets.symmetric(horizontal: 8),
-                                          child: Icon(Icons.language, color: AppColors.primaryColor,),
-                                        ),
-                                        Text("Languages", style: GoogleFonts.varelaRound(
-                                          fontSize: 15, color: AppColors.primaryColor,
-                                        ),)
-                                      ],
-                                    ),
-                                  ),
-                                  PopupMenuItem(
-                                    value: 1,
-                                    child: Row(
-                                      children: [
-                                        const Padding(
-                                          padding: EdgeInsets.symmetric(horizontal: 8),
-                                          child: Icon(Icons.logout, color: AppColors.primaryColor,),
-                                        ),
-                                        Text("Log out", style: GoogleFonts.varelaRound(
-                                            fontSize: 15,
-                                            color: AppColors.primaryColor
-                                        ),)
-                                      ],
-                                    ),
-                                  ),
-                                ]);
-                            },
-                            icon: const Icon(
-                            Icons.settings,
-                            color: Colors.white,
-                            size: 25,
-                          ),
-                          ),
+                          icon: const Icon(
+                          Icons.settings,
+                          color: Colors.white,
+                          size: 25,
+                        ),
                         ),
                       ),
                     ],
@@ -194,7 +209,7 @@ class _HomePageState extends State<HomePage> {
                 Container(
                   margin: const EdgeInsets.only(top: 40),
                   child: Text(
-                    "Continue Listing",
+                    AppLocalizations.of(context)!.continue_listening,
                     style: GoogleFonts.varelaRound(
                         color: Colors.white, fontSize: 20),
                   ),
@@ -238,7 +253,7 @@ class _HomePageState extends State<HomePage> {
                 Container(
                   margin: const EdgeInsets.only(bottom: 10, top: 40),
                   child: Text(
-                    "Your Top Mixes",
+                    AppLocalizations.of(context)!.top_mixes,
                     style: GoogleFonts.varelaRound(
                         color: Colors.white, fontSize: 20),
                   ),
@@ -301,7 +316,7 @@ class _HomePageState extends State<HomePage> {
                 Container(
                   margin: const EdgeInsets.only(bottom: 10, top: 40),
                   child: Text(
-                    "Based on your recent istening",
+                    AppLocalizations.of(context)!.recent_listening,
                     style: GoogleFonts.varelaRound(
                         color: Colors.white, fontSize: 20),
                   ),
