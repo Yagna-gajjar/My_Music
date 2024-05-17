@@ -8,7 +8,7 @@ import 'package:my_music/utils/app_colors.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+  HomePage({super.key});
   @override
   State<HomePage> createState() => _HomePageState();
 }

@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:my_music/main.dart';
 import 'package:my_music/screens/bottom_navigation_bar.dart';
 import 'package:my_music/utils/Controllers.dart';
 import 'package:my_music/utils/app_colors.dart';
-import 'dart:async';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class LogInPage extends StatefulWidget {
   const LogInPage({super.key});
@@ -179,7 +176,7 @@ class _LogInPageState extends State<LogInPage> {
                                   }
                                   _emailController.clear();
                                   _passwordController.clear();
-                                  Navigator.push(context, MaterialPageRoute(builder: (context) => MyNavigationBar(),));
+                                  Navigator.push(context, MaterialPageRoute(builder: (context) => MyNavigationBar()));
                                 }
                               },
                               style: ElevatedButton.styleFrom(
