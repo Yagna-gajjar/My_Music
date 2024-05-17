@@ -24,6 +24,8 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
 
+  // Controllers.StringGet(key: 'lan');
+  
   Locale _locale = Locale('hi','');
   void setLocale(Locale locale) {
     setState(() {
