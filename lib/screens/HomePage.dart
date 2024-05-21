@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:my_music/main.dart';
+import 'package:my_music/screens/song_list.dart';
 import 'package:my_music/utils/Controllers.dart';
 import 'package:my_music/utils/app_colors.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -99,7 +100,9 @@ class _HomePageState extends State<HomePage> {
                         child: Stack(
                           children: [
                             IconButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                Navigator.push(context, MaterialPageRoute(builder: (context) => SongList(),));
+                              },
                               icon: const Icon(
                                 Icons.notifications_outlined,
                                 color: Colors.white,

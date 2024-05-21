@@ -24,13 +24,22 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
 
-  // Controllers.StringGet(key: 'lan');
-  
-  Locale _locale = Locale('hi','');
-  void setLocale(Locale locale) {
+  Locale? _locale;
+  Future<void> setLocale(Locale locale) async {
     setState(() {
       _locale = locale;
     });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getLocal();
+  }
+
+  Future<void> getLocal() async {
+    String? result = await Controllers.StringGet(key: 'lan') ?? 'en';
+    setLocale(Locale(result));
   }
 
   @override
