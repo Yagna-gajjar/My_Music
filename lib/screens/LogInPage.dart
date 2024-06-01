@@ -85,7 +85,7 @@ class _LogInPageState extends State<LogInPage> {
                             },
                           ),
                         ),
-                        style: const TextStyle(
+                        style: GoogleFonts.varelaRound(
                           color: Colors.white60, // Change text color here
                         ),
                       ),
@@ -140,7 +140,7 @@ class _LogInPageState extends State<LogInPage> {
                             },
                           ),
                         ),
-                        style: const TextStyle(
+                        style: GoogleFonts.varelaRound(
                           color: Colors.white60,
                         ),
                       ),

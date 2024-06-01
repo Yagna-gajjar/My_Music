@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:my_music/main.dart';
+import 'package:my_music/screens/firebaseExample.dart';
 import 'package:my_music/screens/song_list.dart';
 import 'package:my_music/utils/Controllers.dart';
 import 'package:my_music/utils/app_colors.dart';
@@ -88,7 +89,9 @@ class _HomePageState extends State<HomePage> {
                     children: [
                       Expanded(
                         child: IconButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.push(context, MaterialPageRoute(builder: (context) => FirebaseExample(),));
+                          },
                           icon: const Icon(
                             Icons.bar_chart,
                             color: Colors.white,
@@ -329,17 +332,31 @@ class _HomePageState extends State<HomePage> {
                   child: ListView.builder(
                       scrollDirection: Axis.horizontal,
                       itemCount: continue_listning.length,
-                      itemBuilder: (BuildContext context, int index) {
-                        return Container(
-                          width: 180,
-                          margin: const EdgeInsets.only(right: 30),
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(5),
-                            child: Image.asset(
-                              'assets/image_$index.png',
-                              fit: BoxFit.cover,
+                      itemBuilder: (
+                        BuildContext context, int index) {
+                        return Stack(
+                          children: [
+                            Container(
+                              width: 180,
+                              margin: const EdgeInsets.only(right: 30),
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(5),
+                                child: Image.asset(
+                                  'assets/image_$index.png',
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
                             ),
-                          ),
+                            Container(
+                              width: 180,
+                              color: Colors.black54 ,
+                              child: Center(
+                                  child: Text("yagna", style: GoogleFonts.varelaRound(
+                                    color: Colors.white
+                                  ),)
+                                ),
+                            )
+                          ],
                         );
                       }),
                 )

@@ -13,5 +13,4 @@ class Controllers {
     String? result = await prefs.getString(key);
     return result;
   }
-
 }
